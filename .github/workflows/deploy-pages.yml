@@ -31,6 +31,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+      - name: Verify Pages manifest base
+        run: node -e "const fs=require('node:fs');const m=JSON.parse(fs.readFileSync('dist/manifest.webmanifest','utf8'));if(m.start_url!=='/mistweave-of-fates/'||m.scope!=='/mistweave-of-fates/')throw new Error('Pages manifest base mismatch')"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -91,6 +91,8 @@
 
 **Files:** Modify `README.md`, `Mistweave-of-Fates-V0.1开发执行日志.md`.
 
-- [ ] Add bilingual V0.2 gameplay and feedback instructions.
-- [ ] Run `pnpm test` and `pnpm build`; record actual totals.
+- [x] Add bilingual V0.2 gameplay and feedback instructions.
+- [x] Run `pnpm test` and `pnpm build`; record actual totals.
 - [ ] Push only after local tests, production build, and Pages workflow are verified.
+
+**执行状态（2026-08-19）：** 本地发布候选已完成。`pnpm test` 为 11 个测试文件、57 项通过；普通生产构建与 Actions 子路径构建均通过，工作流同款断言确认 manifest 的 `start_url`/`scope` 为 `/mistweave-of-fates/`。隔离 Chrome 已完成桌面与 390px 移动宽度的建角、三案、双线、风险预览和服药确认视觉冒烟，修复并回归了缺失 favicon 造成的 404，最终无运行时或网络错误、无横向溢出。双语 README、立项书、执行日志、文档索引、规格和验收记录已同步。实际 Pages 工作流及线上冒烟仍待完成，故未推送、未标记正式发布。
