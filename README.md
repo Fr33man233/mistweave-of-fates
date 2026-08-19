@@ -17,7 +17,7 @@
 
 ### Play and validate
 
-The public Pages build remains the last published version until the V0.2 release gate is complete: [play Mistweave of Fates](https://fr33man233.github.io/mistweave-of-fates/).
+V0.2 is published on GitHub Pages: [play Mistweave of Fates](https://fr33man233.github.io/mistweave-of-fates/).
 
 Requires Node 20.19+ (or Node 22.12+) and pnpm:
 
@@ -55,7 +55,7 @@ V0.2 intentionally excludes real LLM narration, a backend, multiplayer, combat, 
 
 ## 本地运行与验证
 
-在 V0.2 发布门完成前，公开 Pages 仍代表上一个已发布版本：[在线试玩](https://fr33man233.github.io/mistweave-of-fates/)。
+V0.2 已发布至 GitHub Pages：[在线试玩](https://fr33man233.github.io/mistweave-of-fates/)。
 
 需要 Node 20.19+（或 Node 22.12+）与 pnpm：
 
