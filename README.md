@@ -6,7 +6,9 @@
 
 **Mistweave of Fates** is a browser-local, single-city supernatural investigation RPG set in the original industrial port of Valenport. Deterministic TypeScript rules own every D100 roll and state change; the React client only presents state and submits legal actions. No API key, backend, or network service is required.
 
-### V0.2 first-ascension slice
+### V0.2 first-ascension system-validation slice
+
+V0.2 is a published rules-system validation build, not a completed MVP or a complete player-experience loop. It proves the deterministic character-to-ascension machinery, persistence, and deployment; investigation feedback, active material acquisition, contextual ability value, and complete failure/recovery paths remain pre-MVP work.
 
 - Create an apothecary apprentice, reporter, detective, or dockworker. The profile has three non-refundable character slots; deceased cards remain permanently disabled.
 - Resolve three original investigations through cautious or risky approaches. After three meaningful events, both the Observer and Hound leads become available and remain independently investigable.
@@ -40,9 +42,11 @@ V0.2 intentionally excludes real LLM narration, a backend, multiplayer, combat, 
 
 ## 中文说明
 
-# Mistweave of Fates（灰雾织命）：V0.2 首次晋升体验版
+# Mistweave of Fates（灰雾织命）：V0.2 首次晋升规则系统验证版
 
 《灰雾织命》是一款完全在浏览器本地运行的单城市超自然调查 RPG，舞台是原创工业港城“瓦伦港”。确定性 TypeScript 规则引擎负责 D100、状态和死亡；React 只展示状态并提交合法动作。不需要 API Key、后端或网络服务。
+
+V0.2 是已发布的规则系统验证版，不是已经完成的 MVP 或完整玩家体验闭环。它证明了从职业入口到首次晋升的确定性机械流程、存档与部署；调查结果反馈、主动材料获取、事件内能力价值和完整失败/恢复路径仍属于 pre-MVP 工作。
 
 ## V0.2 试玩流程
 
