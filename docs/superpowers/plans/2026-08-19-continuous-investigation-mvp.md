@@ -65,7 +65,7 @@
 
 ### Task 5: End-to-end acceptance
 
-**Files:** Modify `README.md`; modify `AI原生持续世界RPG-V0.1开发执行日志.md`.
+**Files:** Modify `README.md`; modify `Mistweave-of-Fates-V0.1开发执行日志.md`.
 
 - [ ] Add commands for dev, test, build, reset storage, and a manual three-case acceptance script.
 - [ ] Run `pnpm test` and `pnpm build`; record actual results.

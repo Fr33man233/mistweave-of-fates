@@ -8,7 +8,7 @@
 
 **Tech Stack:** Node.js 20.19+、TypeScript、React、Vite、Zod、Vitest、React Testing Library、fake-indexeddb、idb、vite-plugin-pwa。
 
-**Spec:** [MVP 系统设计基线](./AI原生持续世界RPG-MVP系统设计-v0.1.md)、[V0.1 规则与内容数据合同](./AI原生持续世界RPG-V0.1规则与内容数据合同.md)、[V0.1 最小内容样例](./AI原生持续世界RPG-V0.1最小内容样例.md)。
+**Spec:** [MVP 系统设计基线](./Mistweave-of-Fates-MVP系统设计-v0.1.md)、[V0.1 规则与内容数据合同](./Mistweave-of-Fates-V0.1规则与内容数据合同.md)、[V0.1 最小内容样例](./Mistweave-of-Fates-V0.1最小内容样例.md)。
 
 ## 全局约束
 
