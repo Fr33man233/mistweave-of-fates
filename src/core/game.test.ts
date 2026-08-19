@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { activeCharacter, chooseApproach, createGame, getPathwayTracks, recordMeaningfulEvent, startCase } from './game';
+import { addCharacter, activeCharacter, chooseApproach, createGame, getPathwayTracks, recordMeaningfulEvent, startCase } from './game';
 import { createCharacter } from './profile';
 
 describe('three playable investigations', () => {
@@ -8,6 +8,14 @@ describe('three playable investigations', () => {
     const profile = createCharacter(game.profile, 'detective', 'protect the district');
 
     expect(activeCharacter({ ...game, profile })?.occupationId).toBe('detective');
+  });
+
+  it('commits character creation through a Game-level authoritative action', () => {
+    const next = addCharacter(createGame(), 'detective', 'protect the district');
+
+    expect(activeCharacter(next)?.occupationId).toBe('detective');
+    expect(next.state.eventCursor).toBe(1);
+    expect(next.log.at(-1)).toMatchObject({ eventType: 'character_created', actorId: 'char_1' });
   });
 
   it('resolves a selected case into an authoritative event and clue', () => {

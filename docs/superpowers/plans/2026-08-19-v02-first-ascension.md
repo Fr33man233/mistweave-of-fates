@@ -80,10 +80,12 @@
 
 **Interfaces:** UI invokes only profile, track, ritual, ascension, and ability actions; save/load keeps cards, tracks, materials, rituals, and death.
 
-- [ ] Write failing UI tests for initial character creation, two hidden tracks after three events, ritual risk preview, ascension confirmation, and disabled deceased card.
-- [ ] Run `pnpm test src/App.test.tsx`; expect missing controls.
-- [ ] Implement focused creation, profile, track, ritual, ascension, ability, and death panels plus automatic save/restore.
-- [ ] Run full tests and build.
+- [x] Write failing UI tests for initial character creation, two hidden tracks after three events, ritual risk preview, ascension confirmation, and disabled deceased card.
+- [x] Run `pnpm test src/App.test.tsx`; expect missing controls.
+- [x] Implement focused creation, profile, track, ritual, ascension, ability, and death panels plus automatic save/restore.
+- [x] Run full tests and build.
+
+**执行状态（2026-08-19）：** 已完成并经隔离复审。React 仅维护表单、选择和确认框等瞬时状态，角色创建、调查、轨道、准备、服药与能力均调用确定性核心动作；成功晋升后另一轨道保留只读未完成记录。IndexedDB 加载使用 Zod 验证和跨字段一致性门禁，保存/恢复角色、双轨、材料、仪式、能力与永久死亡，并为真实 V0.1 缺失字段和已完成三案状态提供确定性迁移。定向 3 个文件、21 项测试，全量 10 个文件、56 项测试及生产构建均通过。
 
 ### Task 6: Release acceptance
 

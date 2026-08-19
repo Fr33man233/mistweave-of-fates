@@ -1,6 +1,6 @@
 import { createInitialWorld } from '../content/valenport';
 import { SeededRng, checkD100, commitEvent } from './rules';
-import { createProfile, type Profile } from './profile';
+import { createCharacter, createProfile, type Occupation, type Profile } from './profile';
 import type { Character, WorldState } from './schema';
 
 export const actionIds = ['event_misdelivered_medical_case', 'event_sealed_warehouse_ledger', 'event_night_whistle'] as const;
@@ -47,6 +47,16 @@ const hiddenTracks = (): PathwayTracks => ({
 });
 export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), profile: createProfile(), log: [], availableActions: [...actionIds], legalAttention: 0, meaningfulEventCount: 0, recordedEventCursor: 0, pathwayTracks: hiddenTracks(), abilityUses: [], caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
 export function activeCharacter(game: Game): Character | undefined { return game.profile.characters.find((character) => character.characterId === game.profile.activeCharacterId); }
+export function addCharacter(game: Game, occupation: Occupation, intent: string): Game {
+  const profile = createCharacter(game.profile, occupation, intent);
+  const character = profile.characters.find((entry) => entry.characterId === profile.activeCharacterId)!;
+  const committed = commitEvent(game.state, { eventType: 'character_created', actorId: character.characterId, minutes: 0 });
+  const event = {
+    ...committed.event,
+    stateChanges: [{ path: `profile.characters.${character.characterId}`, from: null, to: character.characterId }],
+  };
+  return { ...game, state: committed.state, profile, log: [...game.log, event] };
+}
 export function getPathwayTracks(game: Game): PathwayTracks { return game.pathwayTracks; }
 function intentIncludes(intent: string, terms: string[]) { const normalized = intent.toLowerCase(); return terms.some((term) => normalized.includes(term)); }
 function pathwayWeights(game: Game): Record<PathwayId, number> {
