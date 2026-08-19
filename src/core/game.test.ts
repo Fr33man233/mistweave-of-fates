@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest';
-import { chooseApproach, createGame, startCase } from './game';
+import { activeCharacter, chooseApproach, createGame, startCase } from './game';
+import { createCharacter } from './profile';
 
 describe('three playable investigations', () => {
+  it('reads the selected profile character as the active game character', () => {
+    const game = createGame();
+    const profile = createCharacter(game.profile, 'detective', 'protect the district');
+
+    expect(activeCharacter({ ...game, profile })?.occupationId).toBe('detective');
+  });
+
   it('resolves a selected case into an authoritative event and clue', () => {
     const game = createGame('case-seed');
     const next = chooseApproach(startCase(game, 'event_misdelivered_medical_case'), 'event_misdelivered_medical_case', 'safe');

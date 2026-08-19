@@ -13,6 +13,13 @@ export const characterSchema = z.object({
   locationId: z.string().min(1), pathwayState: z.string().nullable(), lawStateId: z.string().min(1),
 });
 export type Character = z.infer<typeof characterSchema>;
+export const profileSchema = z.object({
+  slotLimit: z.literal(3),
+  characters: z.array(characterSchema).max(3),
+  deceasedIds: z.array(z.string().min(1)),
+  activeCharacterId: z.string().min(1).nullable(),
+});
+export type Profile = z.infer<typeof profileSchema>;
 const record = z.record(z.string(), z.unknown());
 export const worldStateSchema = z.object({
   schemaVersion: z.literal('0.1.0'), worldId: z.string().min(1), contentPackId: z.string().min(1), contentVersion: z.string().min(1), worldSeed: z.string().min(1), eventCursor: z.int().min(0), worldTime: worldTimeSchema, weatherId: z.string().min(1),

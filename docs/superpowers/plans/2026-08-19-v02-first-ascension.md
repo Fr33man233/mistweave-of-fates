@@ -28,12 +28,12 @@
 
 **Interfaces:** Produce `createProfile()`, `createCharacter(profile, occupationId, intent)`, `activeCharacter(game)`; `Profile` holds `slotLimit`, `characters`, `deceasedIds`, and `activeCharacterId`.
 
-- [ ] Write failing tests for four legal occupations, a 3-slot limit, initial spirituality 5/5, and rejection after all slots are used.
-- [ ] Run `pnpm test -- src/core/profile.test.ts`; expect missing profile exports.
-- [ ] Implement Zod schemas and immutable creation action.
-- [ ] Run targeted and full tests.
+- [x] Write failing tests for four legal occupations, a 3-slot limit, initial spirituality 5/5, and rejection after all slots are used.
+- [x] Run `pnpm test -- src/core/profile.test.ts`; expect missing profile exports.
+- [x] Implement Zod schemas and immutable creation action.
+- [x] Run targeted and full tests.
 
-**执行状态（2026-08-19）：** 角色档案与创建的第一轮 TDD 已完成定向绿灯；尚未接入 `Game` 的活动角色读取与完整回归，故 Task 1 保持进行中。
+**执行状态（2026-08-19）：** 已完成。`Game` 持有 `Profile`，`activeCharacter(game)` 从 `activeCharacterId` 解析活动角色；`profileSchema` 校验三槽档案。新增 Game 集成、运行时非法职业和四职业创建覆盖；全量测试与生产构建均已复核。
 
 ### Task 2: Hidden dual-path clue state
 

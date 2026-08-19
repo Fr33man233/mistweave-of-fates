@@ -1,14 +1,16 @@
 import { createInitialWorld } from '../content/valenport';
 import { SeededRng, checkD100, commitEvent } from './rules';
-import type { WorldState } from './schema';
+import { createProfile, type Profile } from './profile';
+import type { Character, WorldState } from './schema';
 
 export const actionIds = ['event_misdelivered_medical_case', 'event_sealed_warehouse_ledger', 'event_night_whistle'] as const;
 export type ActionId = (typeof actionIds)[number];
 export type ApproachId = 'safe' | 'risky';
 export type CaseState = { stage: 'available' | 'approach' | 'resolved'; approach?: ApproachId };
-export type Game = { state: WorldState; log: ReturnType<typeof commitEvent>['event'][]; availableActions: ActionId[]; caseStates: Record<ActionId, CaseState>; legalAttention: number };
+export type Game = { state: WorldState; profile: Profile; log: ReturnType<typeof commitEvent>['event'][]; availableActions: ActionId[]; caseStates: Record<ActionId, CaseState>; legalAttention: number };
 const clues: Record<ActionId, string> = { event_misdelivered_medical_case: 'clue_misdelivered_case', event_sealed_warehouse_ledger: 'clue_warehouse_ledger', event_night_whistle: 'clue_night_whistle' };
-export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), log: [], availableActions: [...actionIds], legalAttention: 0, caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
+export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), profile: createProfile(), log: [], availableActions: [...actionIds], legalAttention: 0, caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
+export function activeCharacter(game: Game): Character | undefined { return game.profile.characters.find((character) => character.characterId === game.profile.activeCharacterId); }
 export function startCase(game: Game, action: ActionId): Game { if (game.caseStates[action].stage !== 'available') return game; return { ...game, caseStates: { ...game.caseStates, [action]: { stage: 'approach' } } }; }
 export function chooseApproach(game: Game, action: ActionId, approach: ApproachId): Game {
   if (game.caseStates[action].stage !== 'approach') return game;
