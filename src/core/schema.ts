@@ -6,7 +6,7 @@ export const meterSchema = z.object({ current: z.int().min(0), max: z.int().min(
 export type Meter = z.infer<typeof meterSchema>;
 const value = z.int().min(0).max(100);
 export const characterSchema = z.object({
-  characterId: z.string().min(1), status: z.enum(['active', 'deceased', 'retired']), occupationId: z.string().min(1),
+  characterId: z.string().min(1), status: z.enum(['active', 'deceased', 'retired']), occupationId: z.string().min(1), initialIntent: z.string().min(1),
   attributes: z.object({ physique: value, constitution: value, agility: value, perception: value, intelligence: value, willpower: value, charisma: value, education: value }),
   skills: z.record(z.string(), value), derived: z.object({ hp: meterSchema, sanity: meterSchema, spirituality: meterSchema, pollution: value }),
   conditions: z.array(z.string()), inventoryIds: z.array(z.string()), money: z.object({ currency: z.string().min(1), balance: z.number().min(0) }),

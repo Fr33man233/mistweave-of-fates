@@ -7,6 +7,7 @@ describe('character profile', () => {
     const profile = createCharacter(createProfile(), 'reporter', 'curious');
     expect(profile.characters).toHaveLength(1);
     expect(profile.characters[0]?.derived.spirituality).toEqual({ current: 5, max: 5 });
+    expect(profile.characters[0]?.initialIntent).toBe('curious');
   });
   it('rejects a fourth character card', () => {
     let profile = createProfile();

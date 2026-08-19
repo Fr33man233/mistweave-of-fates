@@ -41,10 +41,12 @@
 
 **Interfaces:** Produce `recordMeaningfulEvent(game)`, `getPathwayTracks(game)` and tracks `observer`, `hound` with `hidden | hinted | trusted | prepared | ascended`.
 
-- [ ] Write failing tests proving tracks appear after three resolved cases, both remain investigable, and only behaviour weights choose their order.
-- [ ] Run targeted test; expect missing track state.
-- [ ] Implement deterministic weighting from occupation, intent, risk choices, and existing case results.
-- [ ] Run targeted and full tests.
+- [x] Write failing tests proving tracks appear after three resolved cases, both remain investigable, and only behaviour weights choose their order.
+- [x] Run targeted test; expect missing track state.
+- [x] Implement deterministic weighting from occupation, intent, risk choices, and existing case results.
+- [x] Run targeted and full tests.
+
+**执行状态（2026-08-19）：** 已完成并经复审。三次有意义事件后，观察者与猎犬同时从 `hidden` 转为 `hinted`；职业、初始意愿、安全/冒险行为和已提交的调查结果只确定 `hintOrder`，两条线索继续并行可调查。计数只接受新的已提交事件，事件日志使用活动角色 ID；权重和转换仅在确定性 `Game` 内结算。技能使用信号将在 Task 4 的真实能力调用中接入。
 
 ### Task 3: Materials, ritual, and ascension resolution
 

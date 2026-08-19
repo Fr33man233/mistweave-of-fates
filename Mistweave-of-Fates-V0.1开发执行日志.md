@@ -69,3 +69,11 @@
 - 独立验收：`pnpm test -- src/core/profile.test.ts src/core/game.test.ts`、`pnpm test` 和 `pnpm build` 均成功；最终为 8 个测试文件、29 项测试通过，生产构建生成 PWA 预缓存。
 - V4 Flash 协作记录：计划一致性 L1 审计按非敏感、无文件访问的自包含任务交接；受控 Hook 在获取 `C:\\Users\\win\\AppData\\Local\\Codex\\plaintext-subagent-handoff\\.v4_flash_worker.lock` 时被拒绝，未生成子代理、未外发工程内容、未替换传输。该失败不计入能力样本；父任务本地完成验证。
 - 资源效率记录：当前成本是隔离 worktree 缺少 `node_modules` 且默认 PATH 无 `node`，导致首次测试无法加载依赖。预期改进是通过锁文件固定安装并在所有命令统一注入 Codex 内置 Node 路径，避免重复下载、环境漂移和无效调试；验证为锁文件安装复用 433 个本地缓存包、定向/全量测试及构建均成功。
+
+## 2026-08-19：V0.2 Task 2 — 双线索隐藏状态
+
+- 红绿证据：先为“三次已结算事件后双线索同时提示”和“行为只决定顺序”加入测试；初次定向运行因 `getPathwayTracks` 缺失按预期失败。最小实现添加 `recordMeaningfulEvent`、`PathwayTracks` 与确定性权重，随后定向测试通过。
+- 数据合同补全：在进入权重实现前发现角色未保存 `initialIntent`；先写失败测试验证缺失，再把该字段加入 `Character` Schema、角色创建和 V0.1 初始世界夹具，确保存档数据可以支撑后续权重。
+- 编译回归与修复：全量 Vitest 首次通过，但 `pnpm build` 发现动态计算键无法满足 `PathwayTracks` 的两个必填字段；改为显式双分支对象后，构建发现遗留的未使用局部变量。删除该变量后，`pnpm build` 与 `pnpm test` 均成功。
+- 复审修正：收到审查后补充了三项未提交门禁：没有新提交事件时 `recordMeaningfulEvent` 不得累加；调查日志必须记录活动角色而非固定 `char_player`；已提交的成功/失败结果必须参与同一行为配置的线索排序。三项先红后绿，最终 `pnpm test` 为 8 个测试文件、34 项测试通过，`pnpm build` 通过。技能使用信号当前尚无可调用能力，明确留待 Task 4 接入，未伪造该项权重。
+- 资源效率记录：当前成本是只运行 Vitest 会遗漏 TypeScript 的严格对象键/未使用局部变量检查。改进是在每一个确定性规则任务的验收门同时执行 `pnpm test` 与 `pnpm build`；验证为本任务在提交前已捕获并消除两项编译问题，不进入后续 UI 任务。
