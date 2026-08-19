@@ -3,14 +3,15 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS ? '/mistweave-of-fates/' : '/',
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: '瓦伦港',
-        short_name: '瓦伦港',
-        description: '本地单城市持久世界 RPG 文字游戏',
+        name: 'Mistweave of Fates（灰雾织命）',
+        short_name: '灰雾织命',
+        description: 'Mistweave of Fates：本地单城市持续世界调查 RPG',
         lang: 'zh-CN',
         start_url: '/',
         scope: '/',

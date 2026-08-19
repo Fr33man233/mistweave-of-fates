@@ -16,7 +16,7 @@ function App() {
   const submitFreeAction = () => { const parsed = parseLocalAction(freeText, game); setParserMessage(parsed.message); if (parsed.action) begin(parsed.action); };
   const latest = game.log.at(-1);
   const resolved = actionIds.find((id) => game.state.clues[{ event_misdelivered_medical_case: 'clue_misdelivered_case', event_sealed_warehouse_ledger: 'clue_warehouse_ledger', event_night_whistle: 'clue_night_whistle' }[id]] !== undefined);
-  return <main className="shell"><h1>瓦伦港</h1><p className="location"><span>灰炉药房</span> · 第 {game.state.worldTime.worldDay} 日</p>
+  return <main className="shell"><h1>Mistweave of Fates</h1><p className="location">灰雾织命 · <span>瓦伦港，灰炉药房</span> · 第 {game.state.worldTime.worldDay} 日</p>
     {!started ? <button type="button" className="start" onClick={() => setStarted(true)}>开始调查</button> : <section><h2>可调查事件</h2>{actionIds.map((id) => game.caseStates[id].stage === 'available' ? <button key={id} type="button" className="case" onClick={() => begin(id)}>接触：{labels[id]}</button> : game.caseStates[id].stage === 'approach' ? <div key={id}><h3>{labels[id]}</h3><button type="button" className="case" onClick={() => resolve(id, 'safe')}>谨慎调查（15 分钟）</button><button type="button" className="case" onClick={() => resolve(id, 'risky')}>冒险调查（30 分钟，可能违法）</button></div> : null)}</section>}
     <p>理智 {game.state.characters.char_player.derived.sanity.current} · 灵性 {game.state.characters.char_player.derived.spirituality.current} · 污染 {game.state.characters.char_player.derived.pollution} · 警方关注 {game.legalAttention}</p>
     {latest && <section className="log"><p>判定：已提交事件 #{latest.eventCursor}</p><p>线索：{labels[resolved ?? 'event_misdelivered_medical_case']}</p></section>}

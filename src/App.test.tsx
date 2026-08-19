@@ -4,14 +4,14 @@ import { describe, expect, it } from 'vitest';
 import App from './App';
 
 describe('初始界面', () => {
-  it('渲染标题“瓦伦港”', () => {
+  it('渲染项目标题“ Mistweave of Fates”', () => {
     render(<App />);
-    expect(screen.getByRole('heading', { name: '瓦伦港' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Mistweave of Fates' })).toBeInTheDocument();
   });
 
   it('渲染地点“灰炉药房”', () => {
     render(<App />);
-    expect(screen.getByText('灰炉药房')).toBeInTheDocument();
+    expect(screen.getByText('瓦伦港，灰炉药房')).toBeInTheDocument();
   });
 
   it('渲染可访问的“开始调查”按钮', () => {

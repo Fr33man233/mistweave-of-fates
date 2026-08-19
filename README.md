@@ -33,7 +33,7 @@ This is a gameplay-loop prototype. Character creation, advancement/potions, real
 
 ## 中文说明
 
-# 瓦伦港：连续调查 MVP
+# Mistweave of Fates（灰雾织命）：瓦伦港连续调查 MVP
 
 一个完全本地运行的单城市超自然调查 RPG 原型。它使用确定性 D100、权威事件日志和浏览器 IndexedDB 存档；不需要 API Key 或网络服务。
 
