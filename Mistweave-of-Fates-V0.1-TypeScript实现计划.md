@@ -10,6 +10,8 @@
 
 **Spec:** [MVP 系统设计基线](./Mistweave-of-Fates-MVP系统设计-v0.1.md)、[V0.1 规则与内容数据合同](./Mistweave-of-Fates-V0.1规则与内容数据合同.md)、[V0.1 最小内容样例](./Mistweave-of-Fates-V0.1最小内容样例.md)。
 
+**Execution evidence:** [开发执行日志](./Mistweave-of-Fates-V0.1开发执行日志.md)、[验收与发布记录](./Mistweave-of-Fates-V0.1验收与发布记录.md)、[试玩反馈模板](./docs/试玩反馈模板.md)。
+
 ## 全局约束
 
 - V0.1 运行形态为 TypeScript + React + Vite 本地 Web/PWA；浏览器是唯一客户端。

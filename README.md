@@ -29,6 +29,11 @@ Run validation with `pnpm test` and create a production build with `pnpm build`.
 
 This is a gameplay-loop prototype. Character creation, advancement/potions, real LLM narration, multiplayer, combat, and the complete economy are intentionally outside this release.
 
+### Project documents and feedback
+
+- [Documentation index](docs/INDEX.md)
+- [Playtest feedback template / 试玩反馈模板](docs/试玩反馈模板.md)
+
 ---
 
 ## 中文说明
@@ -74,3 +79,8 @@ pnpm preview
 ## 已知限制
 
 本版本用于验证调查循环；不含角色创建、魔药/晋升、真实 LLM、图像生成、多人同步、完整经济或战斗系统。
+
+## 文档与反馈
+
+- [文档索引](docs/INDEX.md)
+- [试玩反馈模板](docs/试玩反馈模板.md)
