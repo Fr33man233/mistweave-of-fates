@@ -67,10 +67,12 @@
 
 **Interfaces:** Produce `useAbility(game, pathway, charge: 1 | 2 | 3, seed)` returning a committed result; observer and hound cannot generate clues directly.
 
-- [ ] Write failing tests for 1–3 point predeclared spend, insufficient spirituality rejection, observer pollution pressure, hound injury/sanity pressure, and replay determinism.
-- [ ] Run `pnpm test src/core/abilities.test.ts`; expect missing module.
-- [ ] Implement ability checks and state consequences.
-- [ ] Run targeted and full tests.
+- [x] Write failing tests for 1–3 point predeclared spend, insufficient spirituality rejection, observer pollution pressure, hound injury/sanity pressure, and replay determinism.
+- [x] Run `pnpm test src/core/abilities.test.ts`; expect missing module.
+- [x] Implement ability checks and state consequences.
+- [x] Run targeted and full tests.
+
+**执行状态（2026-08-19）：** 已完成并经本地独立复审。观察者“痕迹感知”和猎犬“危险追迹”在调用前声明 1–3 点总灵性消耗，以种子化双 D100 分别结算能力与加注压力；额外加注同时提高成功率和污染/伤势/理智风险。所有消耗、骰点和后果进入权威事件与 `abilityUses`，同一输入可重放，能力不写入线索或推进轨道；普通能力伤势最低保留 1 HP，不越过既定死亡边界。定向 9 项、全量 50 项测试及生产构建均通过。
 
 ### Task 5: Persistent V0.2 UI
 

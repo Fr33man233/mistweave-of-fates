@@ -20,6 +20,17 @@ export type AscensionRecord = {
   preparationQuality: number;
   outcome: AscensionOutcome;
 };
+export type AbilityPressure = 'none' | 'pollution' | 'injury' | 'sanity';
+export type AbilityUse = {
+  pathway: PathwayId;
+  abilityId: 'trace_sense' | 'danger_trail';
+  charge: 1 | 2 | 3;
+  roll: number;
+  target: number;
+  pressureRoll: number;
+  outcome: 'success' | 'failure';
+  pressure: AbilityPressure;
+};
 export type PathwayTrack = {
   state: 'hidden' | 'hinted' | 'trusted' | 'prepared' | 'ascended';
   hintOrder: 1 | 2 | null;
@@ -28,13 +39,13 @@ export type PathwayTrack = {
 };
 export type PathwayTracks = Record<PathwayId, PathwayTrack>;
 export type CaseState = { stage: 'available' | 'approach' | 'resolved'; approach?: ApproachId };
-export type Game = { state: WorldState; profile: Profile; log: ReturnType<typeof commitEvent>['event'][]; availableActions: ActionId[]; caseStates: Record<ActionId, CaseState>; legalAttention: number; meaningfulEventCount: number; recordedEventCursor: number; pathwayTracks: PathwayTracks };
+export type Game = { state: WorldState; profile: Profile; log: ReturnType<typeof commitEvent>['event'][]; availableActions: ActionId[]; caseStates: Record<ActionId, CaseState>; legalAttention: number; meaningfulEventCount: number; recordedEventCursor: number; pathwayTracks: PathwayTracks; abilityUses: AbilityUse[] };
 const clues: Record<ActionId, string> = { event_misdelivered_medical_case: 'clue_misdelivered_case', event_sealed_warehouse_ledger: 'clue_warehouse_ledger', event_night_whistle: 'clue_night_whistle' };
 const hiddenTracks = (): PathwayTracks => ({
   observer: { state: 'hidden', hintOrder: null, preparation: null, ascension: null },
   hound: { state: 'hidden', hintOrder: null, preparation: null, ascension: null },
 });
-export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), profile: createProfile(), log: [], availableActions: [...actionIds], legalAttention: 0, meaningfulEventCount: 0, recordedEventCursor: 0, pathwayTracks: hiddenTracks(), caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
+export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), profile: createProfile(), log: [], availableActions: [...actionIds], legalAttention: 0, meaningfulEventCount: 0, recordedEventCursor: 0, pathwayTracks: hiddenTracks(), abilityUses: [], caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
 export function activeCharacter(game: Game): Character | undefined { return game.profile.characters.find((character) => character.characterId === game.profile.activeCharacterId); }
 export function getPathwayTracks(game: Game): PathwayTracks { return game.pathwayTracks; }
 function intentIncludes(intent: string, terms: string[]) { const normalized = intent.toLowerCase(); return terms.some((term) => normalized.includes(term)); }
@@ -45,10 +56,12 @@ function pathwayWeights(game: Game): Record<PathwayId, number> {
   const tiers = Object.values(game.state.clues).flatMap((clue) => typeof clue === 'object' && clue !== null && 'tier' in clue && typeof clue.tier === 'string' ? [clue.tier] : []);
   const observerResults = tiers.filter((tier) => tier === 'success' || tier === 'critical_success').length;
   const houndResults = tiers.filter((tier) => tier === 'failure' || tier === 'critical_failure').length;
+  const observerAbilityUses = game.abilityUses.filter((use) => use.pathway === 'observer').length;
+  const houndAbilityUses = game.abilityUses.filter((use) => use.pathway === 'hound').length;
   if (!character) return { observer: safeCount + observerResults, hound: riskyCount + houndResults };
   return {
-    observer: safeCount + observerResults + (character.occupationId === 'reporter' ? 2 : 0) + (character.occupationId === 'detective' ? 1 : 0) + (intentIncludes(character.initialIntent, ['notice', 'detail', 'observe', '调查', '真相', '线索']) ? 2 : 0),
-    hound: riskyCount * 2 + houndResults + (character.occupationId === 'dockworker' ? 2 : 0) + (character.occupationId === 'detective' ? 1 : 0) + (intentIncludes(character.initialIntent, ['danger', 'protect', 'trail', '危险', '保护', '追踪']) ? 2 : 0),
+    observer: safeCount + observerResults + observerAbilityUses + (character.occupationId === 'reporter' ? 2 : 0) + (character.occupationId === 'detective' ? 1 : 0) + (intentIncludes(character.initialIntent, ['notice', 'detail', 'observe', '调查', '真相', '线索']) ? 2 : 0),
+    hound: riskyCount * 2 + houndResults + houndAbilityUses + (character.occupationId === 'dockworker' ? 2 : 0) + (character.occupationId === 'detective' ? 1 : 0) + (intentIncludes(character.initialIntent, ['danger', 'protect', 'trail', '危险', '保护', '追踪']) ? 2 : 0),
   };
 }
 export function recordMeaningfulEvent(game: Game): Game {
