@@ -13,5 +13,5 @@
 | [V0.2 设计](superpowers/specs/2026-08-19-v02-first-ascension-design.md) | 系统验证版已发布 | 首次晋升规则系统验证规格 |
 | [V0.2 实现计划](superpowers/plans/2026-08-19-v02-first-ascension.md) | Task 1–6 已完成 | V0.2 开发任务 |
 | [V0.2 验收与发布记录](../Mistweave-of-Fates-V0.2验收与发布记录.md) | 系统验证范围已发布，未达 MVP | 测试、构建、线上机械流程与回滚证据 |
-| [V1.0 调查链与个人服务器部署预审](superpowers/specs/2026-08-19-v10-investigation-and-hosting-preflight.md) | 样例复核与预审完成，实施 NO-GO | 短链内容门槛、公开样例证据、最小调查合同、AI/规则边界和三档部署选择 |
+| [V1.0 调查链与个人服务器部署预审](superpowers/specs/2026-08-19-v10-investigation-and-hosting-preflight.md) | 样例复核与预审完成，实施 NO-GO | 模块化案件/语法/透镜规划、公开样例证据、AI/规则边界和三档部署选择 |
 | [试玩反馈模板](试玩反馈模板.md) | 持续更新 | 收集真实玩家反馈 |
