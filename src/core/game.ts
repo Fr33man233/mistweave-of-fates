@@ -8,12 +8,32 @@ export type ActionId = (typeof actionIds)[number];
 export type ApproachId = 'safe' | 'risky';
 export const pathwayIds = ['observer', 'hound'] as const;
 export type PathwayId = (typeof pathwayIds)[number];
-export type PathwayTrack = { state: 'hidden' | 'hinted' | 'trusted' | 'prepared' | 'ascended'; hintOrder: 1 | 2 | null };
+export type RitualPreparation = {
+  approach: ApproachId;
+  materialId: 'stabilized_aether_salts' | 'unlicensed_mist_distillate';
+  quality: 2 | 3;
+};
+export type AscensionOutcome = 'success' | 'costly_success' | 'failure' | 'catastrophic_failure';
+export type AscensionRecord = {
+  pathway: PathwayId;
+  roll: number;
+  preparationQuality: number;
+  outcome: AscensionOutcome;
+};
+export type PathwayTrack = {
+  state: 'hidden' | 'hinted' | 'trusted' | 'prepared' | 'ascended';
+  hintOrder: 1 | 2 | null;
+  preparation: RitualPreparation | null;
+  ascension: AscensionRecord | null;
+};
 export type PathwayTracks = Record<PathwayId, PathwayTrack>;
 export type CaseState = { stage: 'available' | 'approach' | 'resolved'; approach?: ApproachId };
 export type Game = { state: WorldState; profile: Profile; log: ReturnType<typeof commitEvent>['event'][]; availableActions: ActionId[]; caseStates: Record<ActionId, CaseState>; legalAttention: number; meaningfulEventCount: number; recordedEventCursor: number; pathwayTracks: PathwayTracks };
 const clues: Record<ActionId, string> = { event_misdelivered_medical_case: 'clue_misdelivered_case', event_sealed_warehouse_ledger: 'clue_warehouse_ledger', event_night_whistle: 'clue_night_whistle' };
-const hiddenTracks = (): PathwayTracks => ({ observer: { state: 'hidden', hintOrder: null }, hound: { state: 'hidden', hintOrder: null } });
+const hiddenTracks = (): PathwayTracks => ({
+  observer: { state: 'hidden', hintOrder: null, preparation: null, ascension: null },
+  hound: { state: 'hidden', hintOrder: null, preparation: null, ascension: null },
+});
 export function createGame(seed = 'seed_valenport_001'): Game { return { state: createInitialWorld(seed), profile: createProfile(), log: [], availableActions: [...actionIds], legalAttention: 0, meaningfulEventCount: 0, recordedEventCursor: 0, pathwayTracks: hiddenTracks(), caseStates: Object.fromEntries(actionIds.map((id) => [id, { stage: 'available' }])) as Record<ActionId, CaseState> }; }
 export function activeCharacter(game: Game): Character | undefined { return game.profile.characters.find((character) => character.characterId === game.profile.activeCharacterId); }
 export function getPathwayTracks(game: Game): PathwayTracks { return game.pathwayTracks; }
@@ -39,8 +59,14 @@ export function recordMeaningfulEvent(game: Game): Game {
   const weights = pathwayWeights(game);
   const first: PathwayId = weights.observer >= weights.hound ? 'observer' : 'hound';
   const pathwayTracks: PathwayTracks = first === 'observer'
-    ? { observer: { state: 'hinted', hintOrder: 1 }, hound: { state: 'hinted', hintOrder: 2 } }
-    : { observer: { state: 'hinted', hintOrder: 2 }, hound: { state: 'hinted', hintOrder: 1 } };
+    ? {
+        observer: { state: 'hinted', hintOrder: 1, preparation: null, ascension: null },
+        hound: { state: 'hinted', hintOrder: 2, preparation: null, ascension: null },
+      }
+    : {
+        observer: { state: 'hinted', hintOrder: 2, preparation: null, ascension: null },
+        hound: { state: 'hinted', hintOrder: 1, preparation: null, ascension: null },
+      };
   return { ...game, meaningfulEventCount, recordedEventCursor, pathwayTracks };
 }
 export function startCase(game: Game, action: ActionId): Game { if (game.caseStates[action].stage !== 'available') return game; return { ...game, caseStates: { ...game.caseStates, [action]: { stage: 'approach' } } }; }

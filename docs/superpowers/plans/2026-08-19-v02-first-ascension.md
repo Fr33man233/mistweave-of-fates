@@ -54,10 +54,12 @@
 
 **Interfaces:** Produce `advanceTrack(game, pathway)`, `prepareRitual(game, pathway, approach)`, `attemptAscension(game, pathway, seed)`.
 
-- [ ] Write failing tests for missing prerequisites, safe/risky material outcomes, successful 5→8 spirituality transition, costly success, nonlethal failure, and catastrophic permanent death.
-- [ ] Run `pnpm test -- src/core/ascension.test.ts`; expect missing module.
-- [ ] Implement four-result D100 ascension resolution with recorded preparation, pollution, legal attention, and immutable death state.
-- [ ] Run targeted and full tests.
+- [x] Write failing tests for missing prerequisites, safe/risky material outcomes, successful 5→8 spirituality transition, costly success, nonlethal failure, and catastrophic permanent death.
+- [x] Run `pnpm test src/core/ascension.test.ts`; expect missing module.
+- [x] Implement four-result D100 ascension resolution with recorded preparation, pollution, legal attention, and immutable death state.
+- [x] Run targeted and full tests.
+
+**执行状态（2026-08-19）：** 已完成并经本地独立复审。每条轨道依次执行 `hinted → trusted → prepared → ascended`；安全/冒险准备分别记录材料与质量，冒险准备增加法律关注和污染。首次晋升使用种子化 D100 产生成功、带代价成功、普通失败和灾难失败，并把骰点、准备质量和结果写入事件证据；成功将灵性提升到 8/8 并锁定所选路径，另一条保持未完成，普通失败可重试，灾难失败永久失效当前角色卡。定向 7 项、全量 41 项测试及生产构建均通过。
 
 ### Task 4: First abilities and declared overcharge
 
@@ -66,7 +68,7 @@
 **Interfaces:** Produce `useAbility(game, pathway, charge: 1 | 2 | 3, seed)` returning a committed result; observer and hound cannot generate clues directly.
 
 - [ ] Write failing tests for 1–3 point predeclared spend, insufficient spirituality rejection, observer pollution pressure, hound injury/sanity pressure, and replay determinism.
-- [ ] Run targeted test; expect missing module.
+- [ ] Run `pnpm test src/core/abilities.test.ts`; expect missing module.
 - [ ] Implement ability checks and state consequences.
 - [ ] Run targeted and full tests.
 
@@ -77,7 +79,7 @@
 **Interfaces:** UI invokes only profile, track, ritual, ascension, and ability actions; save/load keeps cards, tracks, materials, rituals, and death.
 
 - [ ] Write failing UI tests for initial character creation, two hidden tracks after three events, ritual risk preview, ascension confirmation, and disabled deceased card.
-- [ ] Run `pnpm test -- src/App.test.tsx`; expect missing controls.
+- [ ] Run `pnpm test src/App.test.tsx`; expect missing controls.
 - [ ] Implement focused creation, profile, track, ritual, ascension, ability, and death panels plus automatic save/restore.
 - [ ] Run full tests and build.
 

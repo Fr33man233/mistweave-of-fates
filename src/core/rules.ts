@@ -1,4 +1,4 @@
-import type { WorldState, WorldTime } from './schema';
+import type { CommittedEvent, WorldState, WorldTime } from './schema';
 
 export class SeededRng {
   private state: number;
@@ -13,7 +13,10 @@ export function checkD100(effectiveValue: number, roll: number): { roll: number;
 export function advanceWorldTime(time: WorldTime, minutes: number): WorldTime {
   const total = (time.hour * 60) + time.minute + minutes; return { worldDay: time.worldDay + Math.floor(total / 1440), hour: Math.floor((total % 1440) / 60), minute: total % 60 };
 }
-export function commitEvent(state: WorldState, input: { eventType: string; actorId: string | null; minutes: number }) {
+export function commitEvent(
+  state: WorldState,
+  input: { eventType: string; actorId: string | null; minutes: number },
+): { state: WorldState; event: CommittedEvent } {
   const next: WorldState = { ...state, eventCursor: state.eventCursor + 1, worldTime: advanceWorldTime(state.worldTime, input.minutes) };
   return { state: next, event: { schemaVersion: '0.1.0' as const, eventId: `evt_${next.eventCursor}`, eventCursor: next.eventCursor, eventType: input.eventType, worldId: state.worldId, actorId: input.actorId, worldTimeBefore: state.worldTime, worldTimeAfter: next.worldTime, randomEvidence: [], factsAdded: [], factsRemoved: [], stateChanges: [], publicConsequences: [], privateConsequences: [] } };
 }
