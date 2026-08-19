@@ -1,0 +1,7 @@
+import { worldStateSchema, type WorldState } from '../core/schema';
+
+export const contentPack = { manifest: { id: 'city_demo_original', contentVersion: '0.1.0', title: '瓦伦港原创演示包', publicRelease: true }, events: [{ id: 'event_misdelivered_medical_case' }, { id: 'event_sealed_warehouse_ledger' }, { id: 'event_night_whistle' }] } as const;
+
+export function createInitialWorld(seed = 'seed_valenport_001'): WorldState {
+  return worldStateSchema.parse({ schemaVersion: '0.1.0', worldId: 'world_valenport_original_demo', contentPackId: 'city_demo_original', contentVersion: '0.1.0', worldSeed: seed, eventCursor: 0, worldTime: { worldDay: 1, hour: 8, minute: 0 }, weatherId: 'weather_clear', locationStates: {}, npcStates: {}, factionStates: {}, eventInstances: {}, eventClocks: {}, clues: {}, lawStates: {}, globalFlags: {}, characters: { char_player: { characterId: 'char_player', status: 'active', occupationId: 'occupation_apothecary_apprentice', attributes: { physique: 10, constitution: 9, agility: 11, perception: 12, intelligence: 13, willpower: 12, charisma: 10, education: 9 }, skills: {}, derived: { hp: { current: 9, max: 9 }, sanity: { current: 51, max: 51 }, spirituality: { current: 5, max: 5 }, pollution: 0 }, conditions: [], inventoryIds: [], money: { currency: 'silver_coin', balance: 20 }, locationId: 'loc_greyfurnace_apothecary', pathwayState: null, lawStateId: 'law_state_unaffiliated' } } });
+}
