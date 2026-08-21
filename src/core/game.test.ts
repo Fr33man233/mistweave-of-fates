@@ -24,6 +24,8 @@ describe('three playable investigations', () => {
     expect(next.state.eventCursor).toBe(1);
     expect(next.state.clues.clue_misdelivered_case).toBeDefined();
     expect(next.log[0]?.eventType).toBe('investigation_resolved');
+    expect(next.log[0]?.publicConsequences[0]).toMatch(/调查完成|调查受阻/);
+    expect(next.log[0]?.randomEvidence).toContain('approach:safe');
   });
 
   it('records the active character as the committed investigation actor', () => {

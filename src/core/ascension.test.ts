@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { advanceTrack, attemptAscension, prepareRitual } from './ascension';
+import { acquireMaterial, advanceTrack, attemptAscension, prepareRitual } from './ascension';
 import { actionIds, chooseApproach, createGame, startCase, type Game, type PathwayId } from './game';
 import { createCharacter } from './profile';
 
@@ -11,7 +11,8 @@ function hintedGame(): Game {
 }
 
 function preparedGame(pathway: PathwayId = 'observer', approach: 'safe' | 'risky' = 'safe'): Game {
-  return prepareRitual(advanceTrack(hintedGame(), pathway), pathway, approach);
+  const trusted = advanceTrack(hintedGame(), pathway);
+  return prepareRitual(acquireMaterial(trusted, pathway, approach), pathway, approach);
 }
 
 describe('first ascension', () => {
@@ -27,8 +28,8 @@ describe('first ascension', () => {
 
   it('records safe and risky material preparation with distinct consequences', () => {
     const trusted = advanceTrack(hintedGame(), 'observer');
-    const safe = prepareRitual(trusted, 'observer', 'safe');
-    const risky = prepareRitual(trusted, 'observer', 'risky');
+    const safe = prepareRitual(acquireMaterial(trusted, 'observer', 'safe'), 'observer', 'safe');
+    const risky = prepareRitual(acquireMaterial(trusted, 'observer', 'risky'), 'observer', 'risky');
 
     expect(safe.pathwayTracks.observer.preparation).toEqual({ approach: 'safe', materialId: 'stabilized_aether_salts', quality: 2 });
     expect(safe.legalAttention).toBe(trusted.legalAttention);
@@ -63,12 +64,18 @@ describe('first ascension', () => {
     expect(character?.derived.sanity.current).toBe(45);
   });
 
+  it('reopens a concrete follow-up event after successful ascension', () => {
+    const result = attemptAscension(preparedGame(), 'observer', 'asc-1');
+    expect(result.caseStates.event_night_whistle.stage).toBe('available');
+    expect(result.availableActions).toContain('event_night_whistle');
+  });
+
   it('keeps an ordinary ascension failure nonlethal and retryable', () => {
     const result = attemptAscension(preparedGame(), 'observer', 'asc-0');
     const character = result.profile.characters[0];
 
     expect(result.pathwayTracks.observer.ascension?.outcome).toBe('failure');
-    expect(result.pathwayTracks.observer.state).toBe('prepared');
+    expect(result.pathwayTracks.observer.state).toBe('restricted');
     expect(character?.status).toBe('active');
     expect(character?.derived.spirituality).toEqual({ current: 5, max: 5 });
   });

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { useAbility } from './abilities';
-import { advanceTrack, attemptAscension, prepareRitual } from './ascension';
+import { acquireMaterial, advanceTrack, attemptAscension, prepareRitual } from './ascension';
 import { actionIds, chooseApproach, createGame, startCase, type Game, type PathwayId } from './game';
 import { createCharacter } from './profile';
 
@@ -9,7 +9,7 @@ function ascendedGame(pathway: PathwayId = 'observer'): Game {
   game = { ...game, profile: createCharacter(game.profile, 'detective', 'protect the city and notice every trace') };
   for (const action of actionIds) game = chooseApproach(startCase(game, action), action, 'safe');
   game = advanceTrack(game, pathway);
-  game = prepareRitual(game, pathway, 'safe');
+  game = prepareRitual(acquireMaterial(game, pathway, 'safe'), pathway, 'safe');
   return attemptAscension(game, pathway, 'asc-1');
 }
 

@@ -2,4 +2,9 @@ node_modules/
 dist/
 coverage/
 .vite/
+.pnpm-store/
+playwright-report/
+test-results/
+blob-report/
 *.local
+.local/

@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
+import { modelGatewayPlugin } from './server/model/vite-plugin.ts';
 
 const base = process.env.GITHUB_ACTIONS ? '/mistweave-of-fates/' : '/';
 
@@ -8,6 +9,7 @@ export default defineConfig({
   base,
   plugins: [
     react(),
+    modelGatewayPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {

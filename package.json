@@ -5,8 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:e2e": "vite --host 127.0.0.1 --port 4173 --strictPort",
     "build": "tsc -b && vite build",
     "test": "vitest run",
+    "test:model": "vitest run src/model server/model",
+    "model:t1": "node scripts/model-preflight.mjs --live",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report",
+    "test:production-boundary": "node scripts/check-production-test-boundary.mjs",
+    "test:automation": "pnpm run loop:fast && pnpm run test:e2e",
+    "loop:fast": "pnpm run test && pnpm run build && pnpm run test:production-boundary",
+    "loop:full": "pnpm run test:automation",
     "test:watch": "vitest",
     "preview": "vite preview"
   },
@@ -17,6 +26,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.4",

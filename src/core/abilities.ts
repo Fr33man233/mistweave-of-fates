@@ -6,6 +6,7 @@ import {
   type PathwayId,
 } from './game';
 import { SeededRng, commitEvent } from './rules';
+import { updateRecoveryState } from './recovery';
 import type { Character } from './schema';
 
 export type AbilityCharge = 1 | 2 | 3;
@@ -101,4 +102,14 @@ export function useAbility(game: Game, pathway: PathwayId, charge: AbilityCharge
     log: [...game.log, event],
     abilityUses: [...game.abilityUses, abilityUse],
   };
+}
+
+export function useAbilityInEvent(game: Game, pathway: PathwayId, charge: AbilityCharge, seed: string, targetActionId?: string): Game {
+  const afterAbility = useAbility(game, pathway, charge, seed);
+  const character = activeCharacter(afterAbility);
+  if (!character) throw new Error('An active character is required');
+  const committed = commitEvent(afterAbility.state, { eventType: 'ability_applied_to_investigation', actorId: character.characterId, minutes: 10 });
+  const use = afterAbility.abilityUses.at(-1)!;
+  const event = { ...committed.event, randomEvidence: [`ability_roll:${use.roll}`, `charge:${charge}`, ...(targetActionId ? [`target:${targetActionId}`] : [])], publicConsequences: [use.outcome === 'success' ? '能力改变了当前任务可尝试的方法，并揭示额外迹象。' : '能力未能改变当前任务方法，但代价已经结算。'] };
+  return updateRecoveryState({ ...afterAbility, state: committed.state, log: [...afterAbility.log, event] });
 }
